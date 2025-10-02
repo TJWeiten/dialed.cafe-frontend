@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import { SignedIn, SignOutButton, UserButton } from "@clerk/nextjs";
 
 const navLinks = [
   { name: "Dashboard", href: "/dashboard" },
@@ -83,13 +84,9 @@ const Navbar: React.FC = () => {
 
           {/* Right: Avatar */}
           <div className="flex items-center gap-4 justify-self-end">
-            <Image
-              src="/avatar-placeholder.png"
-              className="h-10 w-10 rounded-full p-1 ring-2 ring-gray-500"
-              width={128}
-              height={128}
-              alt="User's Profile Image"
-            />
+            <SignedIn>
+              <UserButton showName={true} />
+            </SignedIn>
           </div>
         </div>
       </div>

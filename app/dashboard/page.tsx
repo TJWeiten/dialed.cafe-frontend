@@ -1,7 +1,46 @@
+"use client";
+
+import { useAuth } from "@clerk/nextjs";
+import { useState, useEffect } from "react";
+
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { apiFetch } from "@/lib/API";
+import { useRouter } from "next/navigation";
 
 export default function Dashboard() {
+  const { getToken, isLoaded, userId } = useAuth();
+  const [message, setMessage] = useState("");
+  const router = useRouter();
+
+  useEffect(() => {
+    // Clerk not entered loaded state...
+    if (!isLoaded) {
+      return;
+    }
+    // Clerk loaded, but no user. Redirect to sign-in?
+    if (!userId) {
+      router.push("/sign-in");
+      return;
+    }
+    // Clerk loaded and user exists. Poke backend!
+    const fetchData = async () => {
+      try {
+        const token = await getToken();
+        if (!token) {
+          console.warn("Could not get token even though user is loaded.");
+          return;
+        }
+        const response = await apiFetch("/protected", {}, token);
+        const data = await response.json();
+        setMessage(data.message);
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+      }
+    };
+    fetchData();
+  }, [isLoaded, userId, getToken, router]);
+
   return (
     <main className="flex flex-grow items-start justify-center">
       {/* Main Content */}
@@ -14,6 +53,11 @@ export default function Dashboard() {
           pull the perfect shot, every time.
         </p>
         {/* Add more dashboard content here */}
+        {message && (
+          <div className="box-shadow-[var(--shadowy-text)] w-full rounded-md border-1 border-green-100/50 bg-green-800/50 p-4 text-center font-bold">
+            <p className="text-green-100">{message}</p>
+          </div>
+        )}
       </div>
     </main>
   );

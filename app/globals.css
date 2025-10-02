@@ -1,8 +1,10 @@
+@layer theme, base, clerk, components, utilities;
 @import "tailwindcss";
 
 :root {
   --background: #ffffff;
   --foreground: #0a0a0a;
+  --clerk-color-background: linear-gradient(var(--panel-gradient));
 }
 
 @theme inline {
