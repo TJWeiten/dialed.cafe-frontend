@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { Gradient } from "../lib/Gradient.js";
 
-export default function ClientCanvasBackground() {
+export default function Background() {
   useEffect(() => {
     const gradient = new Gradient();
     // @ts-ignore (hides error in VSCode)

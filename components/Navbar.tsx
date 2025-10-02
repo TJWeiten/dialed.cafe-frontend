@@ -4,18 +4,18 @@ import React, { useState } from "react";
 import Image from "next/image";
 
 const navLinks = [
-  { name: "Dashboard", href: "#" },
-  { name: "Beans", href: "#" },
-  { name: "Brews", href: "#" },
-  { name: "Sauces", href: "#" },
-  { name: "Grinders", href: "#" },
+  { name: "Dashboard", href: "/dashboard" },
+  { name: "Beans", href: "/dashboard/beans" },
+  { name: "Brews", href: "/dashboard/brews" },
+  { name: "Sauces", href: "/dashboard/sauces" },
+  { name: "Grinders", href: "/dashboard/grinders" },
 ];
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="fixed top-6 right-6 left-6 z-50 overflow-hidden rounded-xl bg-[linear-gradient(var(--panel-gradient))] shadow-[var(--boxy-shadow)] outline-1 outline-[var(--color-panel-border)] backdrop-blur-md transition-all duration-300 ease-in-out">
+    <nav className="static z-50 mx-6 mt-6 mb-12 overflow-hidden rounded-xl bg-[linear-gradient(var(--panel-gradient))] outline-1 outline-[var(--color-panel-border)] backdrop-blur-md transition-all duration-300 ease-in-out">
       {/* Top Bar */}
       <div className="mx-auto h-24 px-8">
         <div className="grid h-full grid-cols-3 items-center md:flex md:justify-between">
