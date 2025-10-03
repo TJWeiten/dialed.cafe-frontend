@@ -2,12 +2,12 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { SignedIn, SignOutButton, UserButton } from "@clerk/nextjs";
 
 const navLinks = [
-  { name: "Dashboard", href: "/dashboard" },
+  { name: "Brews", href: "/dashboard" },
   { name: "Beans", href: "/dashboard/beans" },
-  { name: "Brews", href: "/dashboard/brews" },
   { name: "Sauces", href: "/dashboard/sauces" },
   { name: "Grinders", href: "/dashboard/grinders" },
 ];
@@ -19,12 +19,12 @@ const Navbar: React.FC = () => {
     <nav className="static z-50 mx-6 mt-6 mb-12 overflow-hidden rounded-xl bg-[linear-gradient(var(--panel-gradient))] outline-1 outline-[var(--color-panel-border)] backdrop-blur-md transition-all duration-300 ease-in-out">
       {/* Top Bar */}
       <div className="mx-auto h-24 px-8">
-        <div className="grid h-full grid-cols-3 items-center md:flex md:justify-between">
+        <div className="grid h-full grid-cols-3 items-center">
           {/* Left: Logo */}
           <div className="justify-self-start">
-            <div className="text-lg font-bold text-white text-shadow-[var(--shadowy-text)]">
+            <span className="text-2xl font-bold text-white italic text-shadow-[var(--shadowy-text)]">
               DIALED
-            </div>
+            </span>
           </div>
 
           {/* Center: Hamburger (Mobile Only) */}
@@ -70,20 +70,20 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Center: Desktop Links (Desktop Only) */}
-          <div className="hidden space-x-8 md:flex">
+          <div className="hidden space-x-8 md:flex md:justify-center">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
                 href={link.href}
                 className="text-md font-semibold text-gray-300 transition-colors text-shadow-[var(--shadowy-text)] hover:text-white"
               >
                 {link.name}
-              </a>
+              </Link>
             ))}
           </div>
 
           {/* Right: Avatar */}
-          <div className="flex items-center gap-4 justify-self-end">
+          <div className="flex items-center justify-end gap-4 justify-self-end">
             <SignedIn>
               <UserButton showName={true} />
             </SignedIn>

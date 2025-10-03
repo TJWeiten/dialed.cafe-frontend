@@ -67,7 +67,8 @@ export default function RootLayout({
           userButtonPopoverCard:
             "w-[90vw] backdrop-blur-md transition-all duration-300 ease-in-out bg-black/30 !left-1/2 -translate-x-1/2 md:max-w-xs md:!left-full md:!-translate-x-[calc(100%+1.5rem)] mt-8",
           avatarBox: "h-10 w-10",
-          userButtonOuterIdentifier: "hidden md:inline text-lg font-bold",
+          userButtonOuterIdentifier:
+            "hidden md:inline text-md font-sans font-semibold text-gray-300 transition-colors text-shadow-[var(--shadowy-text)] hover:text-white",
           userButtonPopoverActionButton: "text-white",
           avatarImageActionsUpload: "text-white",
           formButtonReset: "text-white",
