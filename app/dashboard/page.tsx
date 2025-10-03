@@ -33,7 +33,7 @@ export default function Dashboard() {
           return;
         }
         const response = await apiFetch("/protected", {}, token);
-        const data = await response.json();
+        const data = await response;
         setMessage(data.message);
       } catch (error) {
         if (error instanceof Error) {

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { SignedIn, SignOutButton, UserButton } from "@clerk/nextjs";
+import FuzzyText from "@/components/ui/shadcn-io/fuzzy-text";
 
 const navLinks = [
   { name: "Brews", href: "/dashboard" },
@@ -21,12 +22,18 @@ const Navbar: React.FC = () => {
       <div className="mx-auto h-24 px-8">
         <div className="grid h-full grid-cols-3 items-center">
           {/* Left: Logo */}
-          <div className="justify-self-start">
-            <span className="text-2xl font-bold text-white italic text-shadow-[var(--shadowy-text)]">
+          <div className="-translate-x-15 justify-self-start">
+            <FuzzyText
+              fontFamily="inter"
+              fontSize="clamp(2rem, 2vw, 2rem)"
+              fontWeight={600}
+              color="rgba(255, 255, 255, 0.9)"
+              enableHover={true}
+              baseIntensity={0.07}
+            >
               DIALED
-            </span>
+            </FuzzyText>
           </div>
-
           {/* Center: Hamburger (Mobile Only) */}
           <div className="justify-self-center md:hidden">
             <button

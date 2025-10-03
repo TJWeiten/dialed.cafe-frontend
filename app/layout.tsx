@@ -75,6 +75,7 @@ export default function RootLayout({
           button: "text-neutral-400",
           userButtonTrigger: "focus:shadow-none",
           footerActionLink: "text-white",
+          modalContent: "bg-black",
         },
       }}
     >
