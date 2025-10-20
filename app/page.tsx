@@ -12,7 +12,7 @@ export default function Landing() {
             <span className="relative">
               <span
                 aria-hidden="true"
-                className="absolute inset-0 z-0 bg-clip-text text-transparent"
+                className="absolute inset-0 z-0 bg-clip-text text-transparent select-none"
                 style={{
                   backgroundImage:
                     "conic-gradient(from 136.95deg at 50% 50%, #0294fe -55.68deg, #ff2136 113.23deg, #9b4dff 195deg, #0294fe 304.32deg, #ff2136 473.23deg)",
@@ -25,7 +25,7 @@ export default function Landing() {
               </span>
               <span
                 aria-hidden="true"
-                className="absolute inset-0 z-0 bg-clip-text text-transparent"
+                className="absolute inset-0 z-0 bg-clip-text text-transparent select-none"
                 style={{
                   backgroundImage:
                     "conic-gradient(from 136.95deg at 50% 50%, #0294fe -55.68deg, #ff2136 113.23deg, #9b4dff 195deg, #0294fe 304.32deg, #ff2136 473.23deg)",
