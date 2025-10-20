@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { SignedIn, SignOutButton, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignOutButton, UserButton, useAuth } from "@clerk/nextjs";
 import FuzzyText from "@/components/ui/shadcn-io/fuzzy-text";
 
 const navLinks = [
@@ -15,6 +15,7 @@ const navLinks = [
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isLoaded } = useAuth();
 
   return (
     <nav className="static z-50 mx-6 mt-6 mb-12 overflow-hidden rounded-xl bg-[linear-gradient(var(--panel-gradient))] outline-1 outline-[var(--color-panel-border)] backdrop-blur-md transition-all duration-300 ease-in-out">
@@ -22,7 +23,7 @@ const Navbar: React.FC = () => {
       <div className="mx-auto h-24 px-8">
         <div className="grid h-full grid-cols-3 items-center">
           {/* Left: Logo */}
-          <div className="-translate-x-15 justify-self-start">
+          <div className="flex h-12 -translate-x-15 items-center justify-self-start overflow-hidden">
             <FuzzyText
               fontFamily="inter"
               fontSize="clamp(2rem, 2vw, 2rem)"
@@ -91,9 +92,16 @@ const Navbar: React.FC = () => {
 
           {/* Right: Avatar */}
           <div className="flex items-center justify-end gap-4 justify-self-end">
-            <SignedIn>
-              <UserButton showName={true} />
-            </SignedIn>
+            {!isLoaded ? (
+              <div className="flex items-center gap-2">
+                <div className="hidden h-4 w-24 animate-pulse rounded bg-gray-600/50 md:block"></div>
+                <div className="h-10 w-10 animate-pulse rounded-full bg-gray-600/50"></div>
+              </div>
+            ) : (
+              <SignedIn>
+                <UserButton showName={true} />
+              </SignedIn>
+            )}
           </div>
         </div>
       </div>

@@ -9,7 +9,7 @@ import PlaceholderTable from "@/components/PlaceholderTable";
 import { apiFetch } from "@/lib/API";
 import { useRouter } from "next/navigation";
 
-export default function Dashboard() {
+export default function Beans() {
   const { getToken, isLoaded, userId } = useAuth();
   const [message, setMessage] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -54,7 +54,7 @@ export default function Dashboard() {
       {/* Main Content */}
       <div className="flex w-full max-w-7xl flex-grow flex-col items-start justify-center gap-8 p-8 pt-10">
         <h1 className="text-center text-4xl leading-[110%] font-semibold text-white opacity-90 text-shadow-[var(--shadowy-text)] md:text-7xl">
-          Welcome to your brew log
+          Keep track of those beans
         </h1>
         <p className="text-center text-xl font-medium tracking-wide text-balance text-white text-shadow-[var(--shadowy-text)]">
           Here you can track your beans, log brews, and get AI-powered advice to
@@ -66,7 +66,7 @@ export default function Dashboard() {
             <p className="text-green-100">{message}</p>
           </div>
         )}
-        {message && <PlaceholderTable />}
+        {message && <p>Beanabalooza</p>}
         {error && (
           <div className="box-shadow-[var(--shadowy-text)] w-full rounded-md border-1 border-red-100/50 bg-red-800/50 p-4 text-center font-bold">
             <p className="text-red-100">{error}</p>
