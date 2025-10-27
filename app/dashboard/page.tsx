@@ -1,11 +1,11 @@
 "use client";
 
-import { AsyncDashboardContent } from "@/components/AsyncDashboardContent";
+import { AsyncDashboardContent } from "@/components/universal/AsyncDashboardContent";
 import PlaceholderTable from "@/components/PlaceholderTable";
 import { useApiData } from "@/hooks/useApiData";
 
-export default function Dashboard() {
-    const { message, error, loading } = useApiData("/protected");
+export default function BrewsPage() {
+    const { data, error, loading } = useApiData("/protected");
     return (
         <main className="flex flex-grow items-start justify-center">
             {/* Main Content */}
@@ -19,7 +19,7 @@ export default function Dashboard() {
                 </p>
                 <AsyncDashboardContent
                     loading={loading}
-                    message={message}
+                    message={data ? (data as any).message : null}
                     error={error}
                 >
                     <PlaceholderTable />

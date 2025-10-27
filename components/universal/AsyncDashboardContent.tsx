@@ -1,24 +1,24 @@
-import { MessageBox } from "./ui/ApiMessage";
-import { LoadingSpinner } from "./ui/LoadingSpinner";
+import { MessageBox } from "./ApiMessage";
+import { LoadingSpinner } from "./LoadingSpinner";
 
 interface AsyncDashboardContentProps {
     loading: boolean;
-    message: string | null;
-    error: string | null;
+    message?: string | null;
+    error?: string | null;
     children?: React.ReactNode;
 }
 
 export function AsyncDashboardContent({
     loading,
-    message,
-    error,
+    message = null,
+    error = null,
     children,
 }: AsyncDashboardContentProps) {
     return (
         <>
             {loading && <LoadingSpinner />}
+            {children}
             {message && <MessageBox message={message} type="success" />}
-            {message && children}
             {error && <MessageBox message={error} type="error" />}
         </>
     );

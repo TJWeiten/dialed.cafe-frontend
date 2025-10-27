@@ -1,11 +1,10 @@
 "use client";
 
-import { AsyncDashboardContent } from "@/components/AsyncDashboardContent";
-import PlaceholderTable from "@/components/PlaceholderTable";
+import { AsyncDashboardContent } from "@/components/universal/AsyncDashboardContent";
 import { useApiData } from "@/hooks/useApiData";
 
-export default function Sauces() {
-    const { message, error, loading } = useApiData("/protected");
+export default function SaucesPage() {
+    const { data, error, loading } = useApiData("/protected");
     return (
         <main className="flex flex-grow items-start justify-center">
             {/* Main Content */}
@@ -19,7 +18,7 @@ export default function Sauces() {
                 </p>
                 <AsyncDashboardContent
                     loading={loading}
-                    message={message}
+                    message={data ? (data as any).message : null}
                     error={error}
                 >
                     <p className="text-shadow-[var(--shadowy-text)] text-center font-bold">

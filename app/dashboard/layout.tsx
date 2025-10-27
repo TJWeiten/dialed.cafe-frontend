@@ -1,9 +1,10 @@
 "use client";
 
 import { useAuth } from "@clerk/nextjs";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/universal/Navbar";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { Toaster } from "@/components/ui/shadcn-ui/sonner";
 
 export default function DashboardLayout({
     children,
@@ -22,6 +23,7 @@ export default function DashboardLayout({
             <Navbar />
             {/* Page Content */}
             {children}
+            <Toaster />
         </div>
     );
 }
