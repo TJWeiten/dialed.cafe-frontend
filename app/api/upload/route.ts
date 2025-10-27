@@ -1,5 +1,5 @@
 import { v2 as cloudinary } from "cloudinary";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { randomUUID } from "crypto";
 
 cloudinary.config({
@@ -8,7 +8,7 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
     const formData = await request.formData();
     const file = formData.get("image") as File;
 
@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    return new Promise((resolve, reject) => {
+    return new Promise<NextResponse>((resolve, reject) => {
         cloudinary.uploader
             .upload_stream(
                 {
@@ -32,14 +32,14 @@ export async function POST(request: NextRequest) {
                 },
                 (error, result) => {
                     if (error) {
-                        reject(
-                            Response.json(
+                        resolve(
+                            NextResponse.json(
                                 { error: error.message },
                                 { status: 500 },
                             ),
                         );
                     } else {
-                        resolve(Response.json({ url: result?.secure_url }));
+                        resolve(NextResponse.json({ url: result?.secure_url }));
                     }
                 },
             )
