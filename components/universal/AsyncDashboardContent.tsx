@@ -17,9 +17,11 @@ export function AsyncDashboardContent({
     return (
         <>
             {loading && <LoadingSpinner />}
-            {children}
-            {message && <MessageBox message={message} type="success" />}
-            {error && <MessageBox message={error} type="error" />}
+            {!loading && children}
+            {!loading && message && (
+                <MessageBox message={message} type="success" />
+            )}
+            {!loading && error && <MessageBox message={error} type="error" />}
         </>
     );
 }

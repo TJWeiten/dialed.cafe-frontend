@@ -20,7 +20,7 @@ export function GrinderEmpty({
     connectionError,
 }: GrinderEmptyProps) {
     return (
-        <Empty className="flex w-full select-none items-center">
+        <Empty className="flex h-full min-h-[60vh] w-full -translate-y-16 select-none items-center justify-center">
             <EmptyHeader>
                 <EmptyMedia
                     className="shadow-xs bg-input/30 border-input flex h-12 w-12 items-center justify-center rounded-md border"

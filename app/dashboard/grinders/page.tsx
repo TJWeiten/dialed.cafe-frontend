@@ -16,7 +16,7 @@ function GrindersPageContent() {
     const { isOpen, editMode, grinder, openModal, closeModal } =
         useGrinderModal();
     const connectionError = error ? true : false;
-    const emptyData = data && Array.isArray(data) && data.length === 0;
+    const emptyData = !!(data && Array.isArray(data) && data.length === 0);
 
     return (
         <main className="flex flex-grow items-start justify-center">
@@ -24,6 +24,7 @@ function GrindersPageContent() {
                 <GrinderHeader
                     addModalOpen={() => openModal(false)}
                     connectionError={connectionError}
+                    emptyData={emptyData}
                 />
                 <AsyncDashboardContent loading={loading} error={error}>
                     {/* No Grinder Data Found */}

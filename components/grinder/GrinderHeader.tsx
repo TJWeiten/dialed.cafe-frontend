@@ -3,11 +3,13 @@ import { Button } from "@/components/ui/shadcn-ui/button";
 interface GrinderHeaderProps {
     addModalOpen: () => void;
     connectionError?: boolean;
+    emptyData: boolean;
 }
 
 export function GrinderHeader({
     addModalOpen,
     connectionError,
+    emptyData,
 }: GrinderHeaderProps) {
     return (
         <>
@@ -18,7 +20,7 @@ export function GrinderHeader({
                 <Button
                     onClick={addModalOpen}
                     variant="outline"
-                    className="text-md mt-6 w-full select-none p-6 lg:mt-0 lg:w-auto"
+                    className={`text-md mt-6 w-full select-none p-6 lg:mt-0 lg:w-auto ${emptyData ? "hidden" : ""}`}
                     disabled={connectionError}
                 >
                     Add Grinder

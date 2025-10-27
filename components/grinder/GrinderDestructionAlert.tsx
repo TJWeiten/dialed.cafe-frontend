@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/shadcn-ui/button";
 import { useGrinder } from "@/hooks/useGrinder";
 import { Grinder } from "@/types/grinder";
+import { Spinner } from "../ui/shadcn-ui/spinner";
 
 interface GrinderDestructionAlertProps {
     grinder?: Grinder;
@@ -69,9 +70,11 @@ export function GrinderDestructionAlert({
                         onClick={handleDelete}
                         className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                     >
-                        {isSubmitting
-                            ? "Deleting..."
-                            : "Yes, I am sure I want to do this"}
+                        {isSubmitting ? (
+                            <Spinner />
+                        ) : (
+                            "Yes, I am sure I want to do this"
+                        )}
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>

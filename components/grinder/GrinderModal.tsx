@@ -16,6 +16,7 @@ import {
 import { Grinder } from "@/types/grinder";
 import { GrinderForm } from "./GrinderForm";
 import { GrinderDestructionAlert } from "./GrinderDestructionAlert";
+import { Spinner } from "../ui/shadcn-ui/spinner";
 
 interface GrinderModalProps {
     editMode: boolean;
@@ -76,11 +77,13 @@ export default function GrinderModal({
                         disabled={isSubmitting}
                         className="w-32"
                     >
-                        {isSubmitting
-                            ? "Saving..."
-                            : editMode
-                              ? "Save Changes"
-                              : "Add Grinder"}
+                        {isSubmitting ? (
+                            <Spinner />
+                        ) : editMode ? (
+                            "Save Changes"
+                        ) : (
+                            "Add Grinder"
+                        )}
                     </Button>
                 </DialogFooter>
             </DialogContent>
