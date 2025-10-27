@@ -13,7 +13,7 @@ export function GrinderHeader({
 }: GrinderHeaderProps) {
     return (
         <>
-            <div className="flex w-full flex-wrap items-center justify-between">
+            <div className="flex w-full select-none flex-wrap items-center justify-between">
                 <h1 className="text-shadow-[var(--shadowy-text)] text-center text-4xl font-semibold leading-[110%] text-white opacity-90 md:text-7xl">
                     Manage your grinders
                 </h1>
