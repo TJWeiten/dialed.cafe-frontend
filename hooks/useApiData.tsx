@@ -8,33 +8,38 @@ export function useApiData(endpoint: string) {
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
-    const fetchData = useCallback(async () => {
-        try {
-            setError(null);
-            setLoading(true);
-            const token = await getToken();
-            if (!token) {
-                console.warn("Could not get token even though user is loaded.");
-                return;
+    const fetchData = useCallback(
+        async (isRefetch: boolean) => {
+            try {
+                setError(null);
+                if (!isRefetch) setLoading(true);
+                const token = await getToken();
+                if (!token) {
+                    console.warn(
+                        "Could not get token even though user is loaded.",
+                    );
+                    return;
+                }
+                const response = await apiFetch(endpoint, {}, token);
+                setData(response);
+            } catch (error) {
+                const errorMessage =
+                    error instanceof Error ? error.message : String(error);
+                setError(errorMessage);
+                throw error;
+            } finally {
+                setLoading(false);
             }
-            const response = await apiFetch(endpoint, {}, token);
-            setData(response);
-        } catch (error) {
-            const errorMessage =
-                error instanceof Error ? error.message : String(error);
-            setError(errorMessage);
-            throw error;
-        } finally {
-            setLoading(false);
-        }
-    }, [endpoint, getToken]);
+        },
+        [endpoint, getToken],
+    );
 
     useEffect(() => {
-        fetchData();
+        fetchData(false);
     }, [fetchData]);
 
     const refetch = useCallback(() => {
-        return fetchData();
+        return fetchData(true);
     }, [fetchData]);
 
     return { data, error, loading, refetch };
