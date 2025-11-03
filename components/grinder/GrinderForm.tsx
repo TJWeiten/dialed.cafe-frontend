@@ -58,6 +58,16 @@ export function GrinderForm({
                 onSubmit={async (e) => {
                     e.preventDefault();
                     const formData = new FormData(e.target as HTMLFormElement);
+                    /* A little silly, but 1Password will try to autofill names, 
+                    but the API expects the field to be called name... so to fix,
+                    we copy the specific name into a generic one, then delete the old */
+                    if (formData.has("grinderName")) {
+                        formData.set(
+                            "name",
+                            formData.get("grinderName") as string,
+                        );
+                        formData.delete("grinderName");
+                    }
                     const data = parseFormData(formData, grinderFormSchema);
                     await handleSubmit(data);
                 }}

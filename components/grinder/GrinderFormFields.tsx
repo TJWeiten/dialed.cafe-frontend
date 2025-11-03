@@ -53,12 +53,12 @@ export function GrinderFormFields({
                     </Field>
 
                     <Field>
-                        <FieldLabel htmlFor="name">
+                        <FieldLabel htmlFor="grinderName">
                             Grinder Name <span className="text-red-500">*</span>
                         </FieldLabel>
                         <Input
-                            id="name"
-                            name="name"
+                            id="grinderName"
+                            name="grinderName"
                             defaultValue={grinder.name}
                             placeholder="Enter grinder name"
                             maxLength={50}

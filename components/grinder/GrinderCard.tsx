@@ -28,7 +28,7 @@ export function GrinderCard({ grinder }: GrinderCardProps) {
     const [imageLoaded, setImageLoaded] = useState(false);
     const [imageLoadFailed, setImageLoadFailed] = useState(false);
     return (
-        <Card className="w-[31%] overflow-hidden border-white/15 py-0 pb-6">
+        <Card className="overflow-hidden border-white/15 py-0 pb-6">
             <div className="relative w-full">
                 <Button
                     variant="ghost"
@@ -86,7 +86,7 @@ export function GrinderCard({ grinder }: GrinderCardProps) {
                         <span className="text-sm font-medium text-neutral-300">
                             Burr Type
                         </span>
-                        <span className="text-sm font-semibold capitalize">
+                        <span className="text-right text-sm font-semibold capitalize">
                             {grinder.burrType.toLowerCase()}
                         </span>
                     </div>
@@ -95,7 +95,7 @@ export function GrinderCard({ grinder }: GrinderCardProps) {
                         <span className="text-sm font-medium text-neutral-300">
                             Dial
                         </span>
-                        <span className="text-sm font-semibold">
+                        <span className="text-right text-sm font-semibold">
                             {grinder.stepless ? "Stepless" : "Stepped"}
                         </span>
                     </div>
@@ -105,7 +105,7 @@ export function GrinderCard({ grinder }: GrinderCardProps) {
                             <span className="text-sm font-medium text-neutral-300">
                                 Grind Range
                             </span>
-                            <span className="text-sm font-semibold">
+                            <span className="max-w-[50%] text-right text-sm font-semibold">
                                 {grinder.grindRange}
                             </span>
                         </div>

@@ -10,6 +10,7 @@ import {
     GrinderModalProvider,
     useGrinderModal,
 } from "@/contexts/GrinderModalContext";
+import Masonry from "react-masonry-css";
 
 function GrindersPageContent() {
     const { data, error, loading, refetch } = useApiData("/grinders");
@@ -36,13 +37,22 @@ function GrindersPageContent() {
                     )}
                     {/* Grinder Data Found */}
                     {!emptyData && (
-                        <div className="flex w-full flex-wrap justify-around gap-8">
-                            {data?.map((grinder) => (
-                                <GrinderCard
-                                    key={grinder.id}
-                                    grinder={grinder}
-                                />
-                            ))}
+                        <div className="flex w-full justify-center">
+                            <Masonry
+                                breakpointCols={{
+                                    default: 3,
+                                    960: 2,
+                                    720: 1,
+                                }}
+                                className="-ml-8 flex w-auto"
+                                columnClassName="pl-8 bg-clip-padding-box"
+                            >
+                                {data?.map((grinder) => (
+                                    <div key={grinder.id} className="mb-8">
+                                        <GrinderCard grinder={grinder} />
+                                    </div>
+                                ))}
+                            </Masonry>
                         </div>
                     )}
                 </AsyncDashboardContent>
