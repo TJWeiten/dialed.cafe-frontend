@@ -43,9 +43,10 @@ function GrindersPageContent() {
                                 config={{
                                     columns: [1, 2, 3],
                                     gap: [24, 24, 24],
-                                    media: [850, 950, 1100],
+                                    media: [768, 1024, 1025],
                                     useBalancedLayout: true,
                                 }}
+                                className="w-full"
                                 render={(item, idx) => (
                                     <GrinderCard key={idx} grinder={item} />
                                 )}

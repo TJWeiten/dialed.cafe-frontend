@@ -5,21 +5,34 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/shadcn-ui/card";
-import { Grinder } from "@/types/grinder";
+import { Sauce, SauceVersion } from "@/types/sauce";
 import { SquarePen } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { Spinner } from "../ui/shadcn-ui/spinner";
-import { useGrinderModal } from "@/contexts/GrinderModalContext";
+import { useSauceModal } from "@/contexts/SauceModalContext";
+import DOMPurify from "dompurify";
+import { getPlaceholderImage } from "@/lib/PlaceholderPreview";
 
-interface GrinderCardProps {
-    grinder: Grinder;
+interface SauceCardProps {
+    sauce: Sauce;
 }
 
-export function GrinderCard({ grinder }: GrinderCardProps) {
-    const { openModal } = useGrinderModal();
+export function SauceCard({ sauce }: SauceCardProps) {
+    const { openModal } = useSauceModal();
     const [imageLoaded, setImageLoaded] = useState(false);
     const [imageLoadFailed, setImageLoadFailed] = useState(false);
+
+    const sauceRecipeHtml =
+        sauce.latestVersion?.recipe.replace(/\n/g, "<br>") ||
+        "Whoops, something went wrong!";
+    const cleanedSauceRecipeHtml = DOMPurify.sanitize(sauceRecipeHtml, {
+        ALLOWED_TAGS: ["br"],
+    });
+
+    const imageOrPlaceholderUrl = sauce.imageUrl
+        ? sauce.imageUrl
+        : getPlaceholderImage(sauce.id);
 
     return (
         <Card className="overflow-hidden border-white/15 py-0 pb-6">
@@ -27,12 +40,12 @@ export function GrinderCard({ grinder }: GrinderCardProps) {
                 <Button
                     variant="ghost"
                     size="sm"
-                    className={`absolute right-2 top-2 z-20 h-8 w-8 hover:text-white ${grinder.imageUrl ? "bg-black/50 text-white" : "text-neutral-200 hover:bg-black/70"}`}
-                    onClick={() => openModal(true, grinder)}
+                    className={`absolute right-2 top-2 z-20 h-8 w-8 hover:text-white ${imageOrPlaceholderUrl ? "bg-black/50 text-white" : "text-neutral-200 hover:bg-black/70"}`}
+                    onClick={() => openModal(true, sauce)}
                 >
                     <SquarePen />
                 </Button>
-                {grinder.imageUrl && (
+                {imageOrPlaceholderUrl && (
                     <>
                         {!imageLoaded && !imageLoadFailed && (
                             <div className="flex aspect-square h-auto w-full animate-pulse items-center justify-center bg-neutral-800 object-cover">
@@ -48,8 +61,8 @@ export function GrinderCard({ grinder }: GrinderCardProps) {
                         )}
                         {!imageLoadFailed && (
                             <Image
-                                src={`${grinder.imageUrl}`}
-                                alt={`Photo of ${grinder.name}`}
+                                src={`${imageOrPlaceholderUrl}`}
+                                alt={`Photo of ${sauce.name}`}
                                 width={350}
                                 height={0}
                                 className={`h-auto w-full ${imageLoaded ? "aspect-square object-cover opacity-100" : "opacity-0"}`}
@@ -67,52 +80,26 @@ export function GrinderCard({ grinder }: GrinderCardProps) {
                     </>
                 )}
                 <CardHeader
-                    className={`z-10 ${grinder.imageUrl ? "absolute bottom-0 left-0 right-0 mb-5" : "mt-5"}`}
+                    className={`z-10 ${imageOrPlaceholderUrl ? "absolute bottom-0 left-0 right-0 mb-5" : "mt-5"}`}
                 >
                     <CardTitle className="select-none text-center text-2xl tracking-wide">
-                        {grinder.name}
+                        {sauce.name}
                     </CardTitle>
                 </CardHeader>
             </div>
             <CardContent className="select-none space-y-4">
                 <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium text-neutral-300">
-                            Burr Type
-                        </span>
-                        <span className="text-right text-sm font-semibold capitalize">
-                            {grinder.burrType.toLowerCase()}
-                        </span>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium text-neutral-300">
-                            Dial
-                        </span>
-                        <span className="text-right text-sm font-semibold">
-                            {grinder.stepless ? "Stepless" : "Stepped"}
-                        </span>
-                    </div>
-
-                    {grinder.grindRange && (
-                        <div className="flex items-center justify-between">
-                            <span className="text-sm font-medium text-neutral-300">
-                                Grind Range
-                            </span>
-                            <span className="max-w-[50%] text-right text-sm font-semibold">
-                                {grinder.grindRange}
-                            </span>
-                        </div>
-                    )}
-
-                    {grinder.notes && (
-                        <div className="border-t border-neutral-700 pt-3">
+                    {cleanedSauceRecipeHtml && (
+                        <div className="">
                             <span className="mb-2 block text-sm font-medium text-neutral-300">
-                                Notes
+                                Recipe / Ingredients
                             </span>
-                            <p className="rounded-md bg-neutral-800 p-3 text-sm italic text-neutral-200">
-                                "{grinder.notes}"
-                            </p>
+                            <p
+                                className="rounded-md bg-neutral-800 p-3 text-sm italic text-neutral-200"
+                                dangerouslySetInnerHTML={{
+                                    __html: cleanedSauceRecipeHtml,
+                                }}
+                            />
                         </div>
                     )}
                 </div>

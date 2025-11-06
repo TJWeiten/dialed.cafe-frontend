@@ -1,39 +1,36 @@
-import { useGrinder } from "@/hooks/useGrinder";
-import { grinderFormSchema } from "@/schemas/GrinderSchema";
-import { Grinder } from "@/types/grinder";
+import { useSauce } from "@/hooks/useSauce";
+import { sauceFormSchema } from "@/schemas/SauceSchema";
+import { Sauce, SauceVersion } from "@/types/sauce";
 import { parseFormData } from "@/utils/formUtils";
 import { useState, useEffect } from "react";
-import { GrinderFormFields } from "./GrinderFormFields";
+import { SauceFormFields } from "./SauceFormFields";
 
-const newGrinder: Grinder = {
+const newSauce: Sauce = {
     id: "",
     name: "",
-    burrType: "FLAT",
-    stepless: false,
-    grindRange: "",
-    notes: "",
-    imageUrl: "",
+    latestVersion: undefined,
+    imageUrl: null,
 };
 
-interface GrinderFormProps {
+interface SauceFormProps {
     editMode: boolean;
-    grinder?: Grinder | undefined;
+    sauce?: Sauce | undefined;
     onOpenChange: (open: boolean) => void;
     rerenderOnSuccess?: () => void;
     setIsSubmitting: (isSubmitting: boolean) => void;
 }
 
-export function GrinderForm({
+export function SauceForm({
     editMode,
-    grinder = newGrinder,
+    sauce = newSauce,
     onOpenChange,
     rerenderOnSuccess,
     setIsSubmitting,
-}: GrinderFormProps) {
+}: SauceFormProps) {
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [imageCleared, setImageCleared] = useState(false);
 
-    const { saveGrinder } = useGrinder(() => {
+    const { saveSauce } = useSauce(() => {
         onOpenChange(false);
         rerenderOnSuccess?.();
     });
@@ -45,10 +42,10 @@ export function GrinderForm({
         }
     }, [imageFile]);
 
-    const handleSubmit = async (data: Omit<Grinder, "id" | "imageUrl">) => {
+    const handleSubmit = async (data: Omit<Sauce, "id" | "imageUrl">) => {
         setIsSubmitting(true);
         try {
-            await saveGrinder(data, editMode, grinder, imageFile, imageCleared);
+            await saveSauce(data, editMode, sauce, imageFile, imageCleared);
         } finally {
             setIsSubmitting(false);
         }
@@ -57,26 +54,26 @@ export function GrinderForm({
     return (
         <div className="flex-1 overflow-y-auto">
             <form
-                id="grinder-form"
+                id="sauce-form"
                 onSubmit={async (e) => {
                     e.preventDefault();
                     const formData = new FormData(e.target as HTMLFormElement);
                     /* A little silly, but 1Password will try to autofill names, 
                     but the API expects the field to be called name... so to fix,
                     we copy the specific name into a generic one, then delete the old */
-                    if (formData.has("grinderName")) {
+                    if (formData.has("sauceName")) {
                         formData.set(
                             "name",
-                            formData.get("grinderName") as string,
+                            formData.get("sauceName") as string,
                         );
-                        formData.delete("grinderName");
+                        formData.delete("sauceName");
                     }
-                    const data = parseFormData(formData, grinderFormSchema);
+                    const data = parseFormData(formData, sauceFormSchema);
                     await handleSubmit(data);
                 }}
             >
-                <GrinderFormFields
-                    grinder={grinder}
+                <SauceFormFields
+                    sauce={sauce}
                     onImageChange={(file) => setImageFile(file)}
                     onImageClear={() => setImageCleared(true)}
                 />

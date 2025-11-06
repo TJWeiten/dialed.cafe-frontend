@@ -9,15 +9,12 @@ import {
 import { Button } from "@/components/ui/shadcn-ui/button";
 import { Coffee } from "lucide-react";
 
-interface GrinderEmptyProps {
+interface SauceEmptyProps {
     addModalOpen: () => void;
     connectionError?: boolean;
 }
 
-export function GrinderEmpty({
-    addModalOpen,
-    connectionError,
-}: GrinderEmptyProps) {
+export function SauceEmpty({ addModalOpen, connectionError }: SauceEmptyProps) {
     return (
         <Empty className="flex h-full min-h-[60vh] w-full -translate-y-16 select-none items-center justify-center">
             <EmptyHeader>
@@ -27,15 +24,15 @@ export function GrinderEmpty({
                 >
                     <Coffee />
                 </EmptyMedia>
-                <EmptyTitle>No Grinders</EmptyTitle>
+                <EmptyTitle>No Sauces</EmptyTitle>
                 <EmptyDescription>
-                    You haven't added a grinder to your account yet. Hopefully
-                    you're not using pre-ground coffee beans, right?
+                    You haven't added a sauce to your account yet. I guess you
+                    like your coffee black?
                 </EmptyDescription>
             </EmptyHeader>
             <EmptyContent>
                 <Button onClick={addModalOpen} disabled={connectionError}>
-                    Add your first grinder!
+                    Add your first sauce!
                 </Button>
             </EmptyContent>
         </Empty>
