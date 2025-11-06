@@ -1,6 +1,5 @@
 import { SauceCard } from "./SauceCard";
-import { Sauce } from "@/types/sauce";
-import { SauceVersion } from "@/types/sauceVersion";
+import { Sauce, SauceVersion } from "@/types/sauce";
 
 interface SauceDisplayProps {
     sauces: Sauce[];
