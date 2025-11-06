@@ -5,7 +5,7 @@
     "scripts": {
         "prebuild": "npm run build:all",
         "build:all": "npm-run-all --parallel dialed_build:*",
-        "dialed_build:counts": "node build/placeholder-count.mjs",
+        "dialed_build:counts": "node scripts/placeholder-count.mjs",
         "dev": "npm run prebuild && next dev --turbopack",
         "build": "npm run prebuild && next build --turbopack",
         "start": "next start"

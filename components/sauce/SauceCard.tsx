@@ -26,6 +26,7 @@ export function SauceCard({ sauce }: SauceCardProps) {
     const sauceRecipeHtml =
         sauce.latestVersion?.recipe.replace(/\n/g, "<br>") ||
         "Whoops, something went wrong!";
+    // SANITIZE because we will be using dangerouslySetInnerHTML below!
     const cleanedSauceRecipeHtml = DOMPurify.sanitize(sauceRecipeHtml, {
         ALLOWED_TAGS: ["br"],
     });
@@ -80,7 +81,7 @@ export function SauceCard({ sauce }: SauceCardProps) {
                     </>
                 )}
                 <CardHeader
-                    className={`z-10 ${imageOrPlaceholderUrl ? "absolute bottom-0 left-0 right-0 mb-5" : "mt-5"}`}
+                    className={`z-10 ${imageOrPlaceholderUrl ? "absolute bottom-0 left-0 right-0 mb-3" : "mt-5"}`}
                 >
                     <CardTitle className="select-none text-center text-2xl tracking-wide">
                         {sauce.name}
@@ -90,9 +91,9 @@ export function SauceCard({ sauce }: SauceCardProps) {
             <CardContent className="select-none space-y-4">
                 <div className="space-y-3">
                     {cleanedSauceRecipeHtml && (
-                        <div className="">
+                        <div className="-mt-6">
                             <span className="mb-2 block text-sm font-medium text-neutral-300">
-                                Recipe / Ingredients
+                                Recipe
                             </span>
                             <p
                                 className="rounded-md bg-neutral-800 p-3 text-sm italic text-neutral-200"
