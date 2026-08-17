@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { SignedIn, SignOutButton, UserButton, useAuth } from "@clerk/nextjs";
+import { Show, SignOutButton, UserButton, useAuth } from "@clerk/nextjs";
 import FuzzyText from "@/components/ui/shadcn-io/fuzzy-text";
 
 const navLinks = [
@@ -98,9 +98,7 @@ const Navbar: React.FC = () => {
                 <div className="h-10 w-10 animate-pulse rounded-full bg-gray-600/50"></div>
               </div>
             ) : (
-              <SignedIn>
-                <UserButton showName={true} />
-              </SignedIn>
+              <Show when="signed-in"><UserButton showName={true} /></Show>
             )}
           </div>
         </div>

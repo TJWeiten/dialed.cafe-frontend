@@ -3,8 +3,7 @@ import {
     ClerkProvider,
     SignInButton,
     SignUpButton,
-    SignedIn,
-    SignedOut,
+    Show,
     UserButton,
 } from "@clerk/nextjs";
 import { Inter, Geist_Mono } from "next/font/google";
@@ -61,8 +60,8 @@ export default function RootLayout({
                     colorPrimaryForeground: "#000",
                     colorForeground: "rgba(255, 255, 255, 0.9)",
                     colorBackground: "rgba(12, 13, 15, 0.5)",
-                    colorInputBackground: "rgba(255, 255, 255, 0.05)",
-                    colorInputText: "rgba(255, 255, 255, 0.9)",
+                    // colorInputBackground: "rgba(255, 255, 255, 0.05)",
+                    // colorInputText: "rgba(255, 255, 255, 0.9)",
                     colorBorder: "hsla(0, 0%, 100%, .9)",
                 },
                 elements: {
