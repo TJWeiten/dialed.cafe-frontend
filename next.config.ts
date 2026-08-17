@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
     allowedDevOrigins: ["sui-no-sato.ryuu.network", "*.sui-no-sato.ryuu.network"],
+    cacheComponents: true,
     images: {
         remotePatterns: [
             {
