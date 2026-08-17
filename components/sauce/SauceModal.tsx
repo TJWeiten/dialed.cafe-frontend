@@ -48,7 +48,7 @@ export default function SauceModal({
                     </DialogTitle>
                     <DialogDescription className="sr-only">
                         {editMode
-                            ? "Edit the details of your sauce including name and recipe"
+                            ? "Edit the details of your sauce including name and recipe (or ingredient list)"
                             : "Add a new sauce to your collection"}
                     </DialogDescription>
                 </DialogHeader>

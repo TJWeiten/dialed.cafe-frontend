@@ -93,7 +93,7 @@ export function SauceCard({ sauce }: SauceCardProps) {
                     {cleanedSauceRecipeHtml && (
                         <div className="-mt-6">
                             <span className="mb-2 block text-sm font-medium text-neutral-300">
-                                Recipe
+                                Recipe / Ingredients
                             </span>
                             <p
                                 className="rounded-md bg-neutral-800 p-3 text-sm italic text-neutral-200"

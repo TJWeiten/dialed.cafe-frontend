@@ -59,7 +59,7 @@ export function SauceFormFields({
 
                     <Field>
                         <FieldLabel htmlFor="recipe">
-                            Recipe <span className="text-red-500">*</span>
+                            Recipe / Ingredients <span className="text-red-500">*</span>
                         </FieldLabel>
                         <Textarea
                             name="recipe"
