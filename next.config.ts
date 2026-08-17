@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-    allowedDevOrigins: ["sui-no-sato.ryuu", "*.sui-no-sato.ryuu"],
+    allowedDevOrigins: ["sui-no-sato.ryuu.network", "*.sui-no-sato.ryuu.network"],
     images: {
         remotePatterns: [
             {
