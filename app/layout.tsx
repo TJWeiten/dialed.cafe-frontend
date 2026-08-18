@@ -55,13 +55,10 @@ export default function RootLayout({
         <ClerkProvider
             appearance={{
                 cssLayerName: "clerk",
-                // baseTheme: "simple",
                 variables: {
                     colorPrimaryForeground: "#000",
                     colorForeground: "rgba(255, 255, 255, 0.9)",
                     colorBackground: "rgba(12, 13, 15, 0.5)",
-                    // colorInputBackground: "rgba(255, 255, 255, 0.05)",
-                    // colorInputText: "rgba(255, 255, 255, 0.9)",
                     colorBorder: "hsla(0, 0%, 100%, .9)",
                 },
                 elements: {
@@ -80,6 +77,8 @@ export default function RootLayout({
                     userButtonTrigger: "focus:shadow-none",
                     footerActionLink: "text-white",
                     modalContent: "bg-black",
+                    formFieldInput:
+                        "bg-white/5 !text-white/90 !border-white/90 placeholder:text-white/50",
                 },
             }}
         >
