@@ -4,6 +4,7 @@ import { useState } from "react"
 import {
   columnFilteringFeature,
   columnVisibilityFeature,
+  columnSizingFeature,
   createColumnHelper,
   createFilteredRowModel,
   createPaginatedRowModel,
@@ -61,6 +62,7 @@ type BrewEntry = {
 const features = tableFeatures({
   columnFilteringFeature,
   columnVisibilityFeature,
+  columnSizingFeature,
   rowPaginationFeature,
   rowSelectionFeature,
   filteredRowModel: createFilteredRowModel(),
@@ -90,34 +92,34 @@ const columns = columnHelper.columns([
         hour12: true,
       })
     },
-    minSize: 140,
+    size: 140,
   }),
   columnHelper.accessor("beanName", {
     header: "Bean",
     filterFn: "includesString",
-    minSize: 220,
+    size: 220,
   }),
   columnHelper.accessor("grinder", {
     header: "Grinder",
     filterFn: "includesString",
-    minSize: 120,
+    size: 120,
   }),
   columnHelper.accessor("grindSetting", {
     header: "Grind",
     filterFn: "includesString",
-    minSize: 80,
+    size: 80,
   }),
   columnHelper.accessor("doseIn", {
     header: "Dose (g)",
-    minSize: 80,
+    size: 80,
   }),
   columnHelper.accessor("yieldOut", {
     header: "Yield (g)",
-    minSize: 80,
+    size: 80,
   }),
   columnHelper.accessor("timeTaken", {
     header: "Time (s)",
-    minSize: 80,
+    size: 80,
   }),
   columnHelper.accessor("rating", {
     header: () => <div className="text-right">Rating</div>,
@@ -130,7 +132,7 @@ const columns = columnHelper.columns([
         </div>
       )
     },
-    minSize: 100,
+    size: 100,
   }),
 ])
 

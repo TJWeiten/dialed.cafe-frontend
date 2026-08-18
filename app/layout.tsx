@@ -55,7 +55,7 @@ export default function RootLayout({
         <ClerkProvider
             appearance={{
                 cssLayerName: "clerk",
-                baseTheme: "simple",
+                // baseTheme: "simple",
                 variables: {
                     colorPrimaryForeground: "#000",
                     colorForeground: "rgba(255, 255, 255, 0.9)",
