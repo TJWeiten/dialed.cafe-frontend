@@ -1,7 +1,7 @@
 "use client";
 
 import { AsyncDashboardContent } from "@/components/universal/AsyncDashboardContent";
-import PlaceholderTable from "@/components/universal/PlaceholderTable";
+import { PlaceholderTable } from "@/components/universal/PlaceholderTable";
 import { useApiData } from "@/hooks/useApiData";
 
 export default function BrewsPage() {
