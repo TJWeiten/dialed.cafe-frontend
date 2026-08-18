@@ -2,6 +2,7 @@ import { useBean } from "@/hooks/useBean";
 import { beanFormSchema } from "@/schemas/BeanSchema";
 import { Bean } from "@/types/bean";
 import { parseFormData } from "@/utils/formUtils";
+import { toast } from "sonner";
 import { useState, useEffect } from "react";
 import { BeanFormFields } from "./BeanFormFields";
 
@@ -77,6 +78,16 @@ export function BeanForm({
                         formData.delete("beanName");
                     }
                     const data = parseFormData(formData, beanFormSchema);
+                    // Validate current weight does not exceed package weight
+                    if (
+                        data.currentWeight !== null &&
+                        data.packageWeight !== null &&
+                        data.currentWeight > data.packageWeight
+                    ) {
+                        toast.error("Current weight cannot be greater than package weight");
+                        setIsSubmitting(false);
+                        return;
+                    }
                     await handleSubmit(data);
                 }}
             >

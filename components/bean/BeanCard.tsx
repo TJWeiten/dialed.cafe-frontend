@@ -91,6 +91,9 @@ export function BeanCard({ bean }: BeanCardProps) {
                 <CardHeader
                     className={`z-10 ${imageOrPlaceholderUrl ? "absolute bottom-0 left-0 right-0 mb-3" : "mt-5"}`}
                 >
+                    <p className="text-center text-sm font-medium text-neutral-300">
+                        {bean.roaster}
+                    </p>
                     <CardTitle className="select-none text-center text-2xl tracking-wide">
                         {bean.name}
                     </CardTitle>
@@ -98,15 +101,6 @@ export function BeanCard({ bean }: BeanCardProps) {
             </div>
             <CardContent className="select-none space-y-4">
                 <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium text-neutral-300">
-                            Roaster
-                        </span>
-                        <span className="text-right text-sm font-semibold">
-                            {bean.roaster}
-                        </span>
-                    </div>
-
                     <div className="flex items-center justify-between">
                         <span className="text-sm font-medium text-neutral-300">
                             Roast Level
@@ -119,7 +113,7 @@ export function BeanCard({ bean }: BeanCardProps) {
                     {(bean.currentWeight !== null || bean.packageWeight) && (
                         <div className="flex items-center justify-between">
                             <span className="text-sm font-medium text-neutral-300">
-                                Weight
+                                Current Weight
                             </span>
                             <span className="text-right text-sm font-semibold">
                                 {bean.currentWeight !== null
@@ -147,6 +141,17 @@ export function BeanCard({ bean }: BeanCardProps) {
                             <span className="inline-block rounded-full bg-amber-900/40 px-3 py-1 text-xs font-semibold text-amber-300 border border-amber-700/50">
                                 Decaf
                             </span>
+                        </div>
+                    )}
+
+                    {bean.descriptors && (
+                        <div className="border-t border-neutral-700 pt-3">
+                            <span className="mb-2 block text-sm font-medium text-neutral-300">
+                                Descriptors
+                            </span>
+                            <p className="rounded-md bg-neutral-800 p-3 text-sm text-neutral-200">
+                                {bean.descriptors}
+                            </p>
                         </div>
                     )}
 

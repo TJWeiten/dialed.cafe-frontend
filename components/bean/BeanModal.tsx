@@ -16,6 +16,18 @@ import { Bean } from "@/types/bean";
 import { BeanForm } from "./BeanForm";
 import { BeanDestructionAlert } from "./BeanDestructionAlert";
 import { Spinner } from "../ui/shadcn-ui/spinner";
+import { useBean } from "@/hooks/useBean";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/shadcn-ui/alert-dialog";
 
 interface BeanModalProps {
     editMode: boolean;
@@ -33,6 +45,16 @@ export default function BeanModal({
     rerenderOnSuccess,
 }: BeanModalProps) {
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const { archiveBean } = useBean(() => {
+        onOpenChange(false);
+        rerenderOnSuccess?.();
+    });
+
+    // When duplicating (bean provided but not editMode), reset currentWeight to packageWeight
+    // and clear roastDate
+    const prefilledBean = bean && !editMode
+        ? { ...bean, currentWeight: bean.packageWeight, roastDate: null }
+        : bean;
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
@@ -54,36 +76,75 @@ export default function BeanModal({
 
                 <BeanForm
                     editMode={editMode}
-                    bean={bean}
+                    bean={prefilledBean}
                     onOpenChange={onOpenChange}
                     rerenderOnSuccess={rerenderOnSuccess}
                     setIsSubmitting={setIsSubmitting}
                 />
 
                 <DialogFooter className="border-t px-6 py-4 sm:items-center">
-                    {editMode && (
-                        <BeanDestructionAlert
-                            bean={bean}
-                            isSubmitting={isSubmitting}
-                            setIsSubmitting={setIsSubmitting}
-                            onOpenChange={onOpenChange}
-                            rerenderOnSuccess={rerenderOnSuccess}
-                        />
-                    )}
-                    <Button
-                        type="submit"
-                        form="bean-form"
-                        disabled={isSubmitting}
-                        className="w-32"
-                    >
-                        {isSubmitting ? (
-                            <Spinner />
-                        ) : editMode ? (
-                            "Save Changes"
-                        ) : (
-                            "Add Bean"
+                    <div className="flex w-full justify-start">
+                        {editMode && bean?.id && (
+                            <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        disabled={isSubmitting}
+                                    >
+                                        {bean?.archived ? "Unarchive" : "Archive"}
+                                    </Button>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent>
+                                    <AlertDialogHeader>
+                                        <AlertDialogTitle>{bean?.archived ? "Unarchive" : "Archive"} Bean</AlertDialogTitle>
+                                        <AlertDialogDescription>
+                                            {bean?.archived
+                                                ? <>Are you sure you want to unarchive <b>{bean.name}</b>? It will be moved back to your active beans.</>
+                                                : <>Are you sure you want to archive <b>{bean.name}</b>? It will be moved to your archived beans section.</>}
+                                        </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                        <AlertDialogAction
+                                            onClick={async () => {
+                                                setIsSubmitting(true);
+                                                await archiveBean(bean.id);
+                                                setIsSubmitting(false);
+                                            }}
+                                        >
+                                            {isSubmitting ? <Spinner /> : bean?.archived ? "Yes, unarchive it" : "Yes, archive it"}
+                                        </AlertDialogAction>
+                                    </AlertDialogFooter>
+                                </AlertDialogContent>
+                            </AlertDialog>
                         )}
-                    </Button>
+                    </div>
+                    <div className="flex gap-2">
+                        {editMode && (
+                            <BeanDestructionAlert
+                                bean={bean}
+                                isSubmitting={isSubmitting}
+                                setIsSubmitting={setIsSubmitting}
+                                onOpenChange={onOpenChange}
+                                rerenderOnSuccess={rerenderOnSuccess}
+                            />
+                        )}
+                        <Button
+                            type="submit"
+                            form="bean-form"
+                            disabled={isSubmitting}
+                            className="w-32"
+                        >
+                            {isSubmitting ? (
+                                <Spinner />
+                            ) : editMode ? (
+                                "Save Changes"
+                            ) : (
+                                "Add Bean"
+                            )}
+                        </Button>
+                    </div>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

@@ -11,7 +11,9 @@ interface BeanModalContextType {
     isOpen: boolean;
     editMode: boolean;
     bean?: Bean;
+    duplicateBean?: Bean;
     openModal: (editMode: boolean, bean?: Bean) => void;
+    openDuplicateModal: (bean: Bean) => void;
     closeModal: () => void;
 }
 
@@ -19,10 +21,19 @@ export function BeanModalProvider({ children }: { children: ReactNode }) {
     const [isOpen, setIsOpen] = useState(false);
     const [editMode, setEditMode] = useState(false);
     const [bean, setBean] = useState<Bean | undefined>();
+    const [duplicateBean, setDuplicateBean] = useState<Bean | undefined>();
 
     const openModal = (editMode: boolean, bean?: Bean) => {
         setEditMode(editMode);
         setBean(bean);
+        setDuplicateBean(undefined);
+        setIsOpen(true);
+    };
+
+    const openDuplicateModal = (bean: Bean) => {
+        setDuplicateBean(bean);
+        setBean(undefined);
+        setEditMode(false);
         setIsOpen(true);
     };
 
@@ -30,6 +41,7 @@ export function BeanModalProvider({ children }: { children: ReactNode }) {
         setIsOpen(false);
         setEditMode(false);
         setBean(undefined);
+        setDuplicateBean(undefined);
     };
 
     return (
@@ -38,7 +50,9 @@ export function BeanModalProvider({ children }: { children: ReactNode }) {
                 isOpen,
                 editMode,
                 bean,
+                duplicateBean,
                 openModal,
+                openDuplicateModal,
                 closeModal,
             }}
         >

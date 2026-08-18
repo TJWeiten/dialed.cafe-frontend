@@ -18,6 +18,17 @@ import {
 } from "@/components/ui/shadcn-ui/select";
 import { Switch } from "@/components/ui/shadcn-ui/switch";
 import ImageUploadField from "@/components/ui/coss-origin/ImageUploadField";
+import { Calendar } from "@/components/ui/calendar";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/shadcn-ui/popover";
+import { Button } from "@/components/ui/shadcn-ui/button";
+import { CalendarIcon } from "lucide-react";
+import { useState, useEffect } from "react";
+import { cn } from "@/lib/utils";
+import { FieldError } from "@/components/ui/shadcn-ui/field";
 
 interface BeanFormFieldsProps {
     bean: Bean;
@@ -30,6 +41,28 @@ export function BeanFormFields({
     onImageChange,
     onImageClear,
 }: BeanFormFieldsProps) {
+    const [roastDate, setRoastDate] = useState<Date | undefined>(
+        bean?.roastDate ? new Date(bean.roastDate) : undefined
+    );
+    const [currentWeight, setCurrentWeight] = useState<string>(
+        bean?.currentWeight?.toString() || ""
+    );
+    const [packageWeight, setPackageWeight] = useState<string>(
+        bean?.packageWeight?.toString() || ""
+    );
+    const [weightError, setWeightError] = useState<string | null>(null);
+
+    // Validate weight whenever either changes
+    useEffect(() => {
+        const current = currentWeight ? parseFloat(currentWeight) : null;
+        const pkg = packageWeight ? parseFloat(packageWeight) : null;
+        if (current !== null && pkg !== null && current > pkg) {
+            setWeightError("Current weight cannot exceed package weight");
+        } else {
+            setWeightError(null);
+        }
+    }, [currentWeight, packageWeight]);
+
     return (
         <div className="px-6 py-4">
             <FieldSet>
@@ -115,6 +148,7 @@ export function BeanFormFields({
                             step="1"
                             placeholder="e.g., 340"
                             defaultValue={bean?.packageWeight ?? ""}
+                            onChange={(e) => setPackageWeight(e.target.value)}
                         />
                         <FieldDescription>
                             The total weight of the bag when purchased
@@ -133,19 +167,61 @@ export function BeanFormFields({
                             step="1"
                             placeholder="e.g., 200"
                             defaultValue={bean?.currentWeight ?? ""}
+                            onChange={(e) => setCurrentWeight(e.target.value)}
+                            className={weightError ? "border-red-500 focus-visible:ring-red-500" : ""}
                         />
                         <FieldDescription>
                             <i>Optional:</i> How much is left in the bag
                         </FieldDescription>
+                        {weightError && (
+                            <p className="text-sm text-red-500 mt-1">{weightError}</p>
+                        )}
                     </Field>
 
                     <Field>
-                        <FieldLabel htmlFor="roastDate">Roast Date</FieldLabel>
-                        <Input
+                        <FieldLabel>Roast Date</FieldLabel>
+                        <Popover>
+                            <PopoverTrigger asChild>
+                                <Button
+                                    variant="outline"
+                                    className={cn(
+                                        "w-full justify-start text-left font-normal",
+                                        !roastDate && "text-muted-foreground"
+                                    )}
+                                >
+                                    <CalendarIcon className="mr-2 size-4" />
+                                    {roastDate
+                                        ? roastDate.toLocaleDateString("en-US", {
+                                              month: "long",
+                                              day: "numeric",
+                                              year: "numeric",
+                                          })
+                                        : "Pick a date"}
+                                </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-auto p-0" align="start">
+                                <Calendar
+                                    mode="single"
+                                    selected={roastDate}
+                                    onSelect={(date) => {
+                                        setRoastDate(date);
+                                        // Update hidden input value for form submission
+                                        const hiddenInput = document.querySelector(
+                                            'input[name="roastDate"]'
+                                        ) as HTMLInputElement;
+                                        if (hiddenInput) {
+                                            hiddenInput.value = date
+                                                ? date.toISOString().split("T")[0]
+                                                : "";
+                                        }
+                                    }}
+                                />
+                            </PopoverContent>
+                        </Popover>
+                        <input
+                            type="hidden"
                             name="roastDate"
-                            id="roastDate"
-                            type="date"
-                            defaultValue={bean?.roastDate || ""}
+                            value={roastDate ? roastDate.toISOString().split("T")[0] : ""}
                         />
                         <FieldDescription>
                             <i>Optional:</i> When the beans were roasted
