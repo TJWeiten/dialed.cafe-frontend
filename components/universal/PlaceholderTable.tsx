@@ -234,7 +234,7 @@ export function PlaceholderTable() {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  className="bg-black/90 hover:bg-black/60"
+                  className="bg-black/90 hover:bg-mauve-900/70"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

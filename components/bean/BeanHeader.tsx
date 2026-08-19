@@ -27,8 +27,7 @@ export function BeanHeader({
                 </Button>
             </div>
             <p className="text-shadow-[var(--shadowy-text)] text-center text-xl font-medium tracking-wide text-white md:text-left">
-                Keep track of your favorite beans, their roast profiles, and
-                how much you have left.
+                The source of all caffeinated (and uncaffeinated) happiness—keep good track of your beans!
             </p>
         </>
     );

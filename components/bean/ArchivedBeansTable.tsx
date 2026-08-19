@@ -242,7 +242,7 @@ export function ArchivedBeansTable({ beans, onDuplicate, onEditBean }: ArchivedB
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  className="bg-black/90 hover:bg-black/60 cursor-pointer"
+                  className="bg-black/90 hover:bg-mauve-900/40 cursor-pointer"
                   onClick={(e) => {
                     // Don't open modal if clicking the duplicate button
                     if ((e.target as HTMLElement).closest("button")) return
