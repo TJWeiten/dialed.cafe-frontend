@@ -62,7 +62,7 @@ export default function BrewCopilotModal({
                         },
                         signal: controller.signal,
                         openWhenHidden: true,
-                        onopen(res) {
+                        async onopen(res) {
                             if (res.ok && res.headers.get("content-type")?.includes("text/event-stream")) {
                                 return;
                             }
