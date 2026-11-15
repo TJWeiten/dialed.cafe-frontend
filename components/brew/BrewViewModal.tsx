@@ -102,7 +102,7 @@ export default function BrewViewModal({
                     {/* Optional fields */}
                     {(brew.milkType || brew.milkAmount || brew.waterTemp || brew.preInfusionTime ||
                       brew.waterType || brew.basketType || brew.puckPrepNotes ||
-                      brew.sauceName || brew.tastingNotes) && (
+                      brew.sauceName || brew.tastingNotes || brew.copilotNotes) && (
                         <div className="space-y-0 divide-y divide-border">
                             {brew.milkType && <DataRow label="Milk Type" value={brew.milkType} />}
                             {brew.milkAmount && <DataRow label="Milk Amount" value={`${brew.milkAmount}ml`} />}
@@ -125,6 +125,9 @@ export default function BrewViewModal({
                             )}
                             {brew.tastingNotes && (
                                 <DataRow label="Tasting Notes" value={<span className="text-right max-w-[60%] italic">{brew.tastingNotes}</span>} />
+                            )}
+                            {brew.copilotNotes && (
+                                <DataRow label="Co-Pilot Notes" value={<span className="text-right max-w-[60%] italic">{brew.copilotNotes}</span>} />
                             )}
                         </div>
                     )}

@@ -36,5 +36,6 @@ export interface BrewEntry {
   sauceId: string | null;
   sauceName: string | null;
   tastingNotes: string | null;
+  copilotNotes: string | null;
   baristaCopilotComment: string | null;
 }
