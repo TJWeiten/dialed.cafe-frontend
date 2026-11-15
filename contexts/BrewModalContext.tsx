@@ -14,12 +14,16 @@ interface BrewModalContextType {
     openViewModal: (brew: BrewEntry) => void;
     openAddModal: () => void;
     closeModal: () => void;
+    copilotBrewId: string | null;
+    openCopilotModal: (brewId: string) => void;
+    closeCopilotModal: () => void;
 }
 
 export function BrewModalProvider({ children }: { children: ReactNode }) {
     const [isOpen, setIsOpen] = useState(false);
     const [mode, setMode] = useState<"view" | "add">("view");
     const [brew, setBrew] = useState<BrewEntry | undefined>();
+    const [copilotBrewId, setCopilotBrewId] = useState<string | null>(null);
 
     const openViewModal = (brew: BrewEntry) => {
         setMode("view");
@@ -39,6 +43,14 @@ export function BrewModalProvider({ children }: { children: ReactNode }) {
         setBrew(undefined);
     };
 
+    const openCopilotModal = (brewId: string) => {
+        setCopilotBrewId(brewId);
+    };
+
+    const closeCopilotModal = () => {
+        setCopilotBrewId(null);
+    };
+
     return (
         <BrewModalContext.Provider
             value={{
@@ -48,6 +60,9 @@ export function BrewModalProvider({ children }: { children: ReactNode }) {
                 openViewModal,
                 openAddModal,
                 closeModal,
+                copilotBrewId,
+                openCopilotModal,
+                closeCopilotModal,
             }}
         >
             {children}

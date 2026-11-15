@@ -7,6 +7,7 @@ import { BrewFormFields } from "./BrewFormFields";
 interface BrewFormProps {
     onOpenChange: (open: boolean) => void;
     rerenderOnSuccess?: () => void;
+    onBrewSaved?: (brewId: string) => void;
     setIsSubmitting: (isSubmitting: boolean) => void;
     beans: Bean[];
     grinders: { id: string; name: string }[];
@@ -16,14 +17,16 @@ interface BrewFormProps {
 export function BrewForm({
     onOpenChange,
     rerenderOnSuccess,
+    onBrewSaved,
     setIsSubmitting,
     beans,
     grinders,
     sauces,
 }: BrewFormProps) {
-    const { saveBrew } = useBrew(() => {
+    const { saveBrew } = useBrew((brewId) => {
         onOpenChange(false);
         rerenderOnSuccess?.();
+        if (brewId) onBrewSaved?.(brewId);
     });
 
     return (

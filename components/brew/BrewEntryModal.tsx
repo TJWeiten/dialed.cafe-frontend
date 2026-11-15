@@ -23,6 +23,7 @@ interface BrewEntryModalProps {
     grinders: { id: string; name: string }[];
     sauces: { id: string; name: string; latestVersionId?: string }[];
     rerenderOnSuccess?: () => void;
+    onBrewSaved?: (brewId: string) => void;
 }
 
 export default function BrewEntryModal({
@@ -32,6 +33,7 @@ export default function BrewEntryModal({
     grinders,
     sauces,
     rerenderOnSuccess,
+    onBrewSaved,
 }: BrewEntryModalProps) {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -54,6 +56,7 @@ export default function BrewEntryModal({
                 <BrewForm
                     onOpenChange={onOpenChange}
                     rerenderOnSuccess={rerenderOnSuccess}
+                    onBrewSaved={onBrewSaved}
                     setIsSubmitting={setIsSubmitting}
                     beans={beans}
                     grinders={grinders}

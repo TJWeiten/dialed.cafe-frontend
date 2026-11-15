@@ -6,6 +6,7 @@ import { useApiData } from "@/hooks/useApiData";
 import { BrewLedgerTable } from "@/components/brew/BrewLedgerTable";
 import BrewViewModal from "@/components/brew/BrewViewModal";
 import BrewEntryModal from "@/components/brew/BrewEntryModal";
+import BrewCopilotModal from "@/components/brew/BrewCopilotModal";
 import { BrewHeader } from "@/components/brew/BrewHeader";
 import { BrewEmpty } from "@/components/brew/BrewEmpty";
 import {
@@ -42,7 +43,7 @@ function mapBrewToEntry(brew: any): BrewEntry {
         sauceName: brew.sauceVersion?.sauce?.name || null,
         tastingNotes: brew.tastingNotes || null,
         copilotNotes: brew.copilotNotes || null,
-        baristaCopilotComment: brew.copilotComment || null,
+        baristaCopilotComment: brew.copilotFeedback || brew.copilotComment || null,
     };
 }
 
@@ -57,7 +58,7 @@ function BrewsPageContent() {
         [brewData],
     );
 
-    const { isOpen, mode, brew, openViewModal, openAddModal, closeModal } = useBrewModal();
+    const { isOpen, mode, brew, openViewModal, openAddModal, closeModal, copilotBrewId, openCopilotModal, closeCopilotModal } = useBrewModal();
 
     const connectionError = brewError ? true : false;
     const emptyData = !!(brewData && Array.isArray(brewData) && brewData.length === 0);
@@ -117,6 +118,18 @@ function BrewsPageContent() {
                         grinders={grinders}
                         sauces={sauces}
                         rerenderOnSuccess={refetch}
+                        onBrewSaved={openCopilotModal}
+                    />
+                )}
+
+                {copilotBrewId && (
+                    <BrewCopilotModal
+                        open={!!copilotBrewId}
+                        onOpenChange={(open) => {
+                            if (!open) closeCopilotModal();
+                        }}
+                        brewId={copilotBrewId}
+                        onComplete={refetch}
                     />
                 )}
             </div>

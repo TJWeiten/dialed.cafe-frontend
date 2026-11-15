@@ -2,7 +2,7 @@ import { toast } from "sonner";
 import { useApiMutation } from "./useApiMutation";
 import { BrewFormData } from "@/schemas/BrewSchema";
 
-export const useBrew = (onSuccess?: () => void) => {
+export const useBrew = (onSuccess?: (brewId?: string) => void) => {
     const { mutate } = useApiMutation();
 
     const saveBrew = async (data: BrewFormData) => {
@@ -39,14 +39,14 @@ export const useBrew = (onSuccess?: () => void) => {
                 copilotNotes: data.copilotNotes,
             };
 
-            await mutate("/brews", {
+            const newBrew = await mutate("/brews", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(brewPayload),
             });
 
             toast.success("Brew logged successfully!");
-            onSuccess?.();
+            onSuccess?.(newBrew?.id);
         } catch (error) {
             console.error("API Error:", error);
             toast.error("Failed to log brew!");
